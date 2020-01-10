@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Autocomplete from './AutoComplete';
-import { inputStream, keydowmStream, inputService } from './event';
+import { inputStream, keydowmStream, inputService, resetStream } from './event';
 interface Props { }
 interface State {
     activeSuggestion:number,
@@ -28,6 +28,7 @@ class App extends React.Component<any, any>{
 
   componentDidUpdate(){
     this.initializeInputStream();
+    this.initializeResetStream();
   }
   initializeInputStream() {
     inputStream.subscribe((val:any) => {
@@ -38,6 +39,19 @@ class App extends React.Component<any, any>{
       });
     });
   }
+
+
+  initializeResetStream(){
+    resetStream.subscribe((e:any)=>{
+      this.setState({
+        showSuggestions: false,
+        searchKey: '',
+        filteredSuggestions:[]
+      });
+    })
+  }
+
+
 
   initializeFocusStream() {
     keydowmStream.subscribe((e:any) =>{
@@ -106,13 +120,14 @@ class App extends React.Component<any, any>{
         ) : 
        (
           <div className="no-suggestions">
-            <em>No suggestions, you're on your own!</em>
+            <em>No suggestions, you're on your own! Kindly enter {4-this.state.searchKey.length} character to Search</em>
           </div>
         );
 
 
     return (
       <div className="App">
+        <div>Search topic from Wiki</div>
         <Autocomplete searchValue={this.state.searchKey} suggestionsListComponent={suggestionsListComponent}/>
         <div>You are Searching "{this.state.searchKey}"</div>
       </div>

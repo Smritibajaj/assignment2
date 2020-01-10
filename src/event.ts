@@ -3,7 +3,7 @@ import { ajax } from 'rxjs/ajax';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 let inputStream = new Subject();
 let keydowmStream = new Subject();
-
+let resetStream = new Subject();
 
 
 const inputService = {
@@ -26,4 +26,10 @@ const keyChange ={
         keydowmStream.next(e);
     }
 }
-export { inputStream, keydowmStream, inputService, keyChange }
+
+const reset = {
+    next:function(e:any){
+        resetStream.next(e);
+    }
+}
+export { inputStream, keydowmStream, inputService, keyChange , reset, resetStream }
