@@ -30,24 +30,7 @@ class App extends React.Component<any, any>{
     this.initializeInputStream();
   }
   initializeInputStream() {
-    const suggestions  = [
-      "Alligator",
-      "Bask",
-      "Crocodilian",
-      "Death Roll",
-      "Eggs",
-      "Jaws",
-      "Reptile",
-      "Solitary",
-      "Tail",
-      "Wetlands"
-    ];
-    const filteredSuggestions = suggestions.filter(
-      suggestion =>
-        suggestion.toLowerCase().indexOf(this.state.searchKey.toLowerCase()) > -1
-    );
     inputStream.subscribe((val:any) => {
-      console.log(val);
       this.setState({
         showSuggestions: true,
         searchKey: val.value,
