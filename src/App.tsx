@@ -72,27 +72,16 @@ class App extends React.Component<any, any>{
         searchKey: filteredSuggestions[activeSuggestion]
       });
     }
-    // User pressed the up arrow, decrement the index
-    else if (e.keyCode === 38) {
-      if (activeSuggestion === 0) {
-        return;
-      }
-
-      this.setState({ activeSuggestion: activeSuggestion - 1 });
-    }
-    // User pressed the down arrow, increment the index
-    else if (e.keyCode === 40) {
-      if (activeSuggestion - 1 === filteredSuggestions.length) {
-        return;
-      }
-
-      this.setState({ activeSuggestion: activeSuggestion + 1 });
-    }
       }
       console.log("state is ",this.state);
     })
   }
 
+  componentWillUnmount(){
+    inputStream.unsubscribe();
+    resetStream.unsubscribe();
+    keydowmStream.unsubscribe();
+  }
   render() {
     const {showSuggestions , searchKey , filteredSuggestions, activeSuggestion } = this.state;
     let suggestionsListComponent:any =( showSuggestions && searchKey.length>3) && (filteredSuggestions.length) ? (

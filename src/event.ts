@@ -10,7 +10,7 @@ const inputService = {
     next:function(value:string | undefined){
         if(value !== undefined && value.length >= 3){
             const source = ajax(`/w/api.php?origin=*&action=opensearch&search=${value}`);
-            const data = source.pipe(debounceTime(500),distinctUntilChanged(),map((res:any)=> res.response[1]));
+            const data = source.pipe(debounceTime(250),distinctUntilChanged(),map((res:any)=> res.response[1]));
             data.subscribe((val:any)=>{
             inputStream.next({value:value,query:val}); 
         })
