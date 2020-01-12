@@ -4,20 +4,22 @@ import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 let inputStream = new Subject();
 let keydowmStream = new Subject();
 let resetStream = new Subject();
+let suggestionStream = new Subject();
 
+const inputService = function(value:string | undefined) {
+        inputStream.next({value:value})
+    }
 
-const inputService = {
-    next:function(value:string | undefined){
-        if(value !== undefined && value.length >= 3){
-            const source = ajax(`/w/api.php?origin=*&action=opensearch&search=${value}`);
-            const data = source.pipe(debounceTime(250),distinctUntilChanged(),map((res:any)=> res.response[1]));
-            data.subscribe((val:any)=>{
-            inputStream.next({value:value,query:val}); 
-        })
-        }
-        else{
-            inputStream.next({value:value,query:[]})
-        }
+const suggestionService = function(value:string | undefined){
+    if(value !== undefined && value.length >= 3){
+        const source = ajax(`/w/api.php?origin=*&action=opensearch&search=${value}`);
+        const data = source.pipe(debounceTime(250),map((res:any)=> res.response[1]));
+        data.subscribe((val:any)=>{
+        suggestionStream.next({query:val}); 
+    })
+    }
+    else{
+        suggestionStream.next({query:[]})
     }
 }
 
@@ -32,4 +34,4 @@ const reset = {
         resetStream.next(e);
     }
 }
-export { inputStream, keydowmStream, inputService, keyChange , reset, resetStream }
+export { inputStream, keydowmStream, inputService, keyChange , reset, resetStream, suggestionService, suggestionStream }

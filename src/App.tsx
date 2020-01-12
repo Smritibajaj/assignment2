@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Autocomplete from './AutoComplete';
-import { inputStream, keydowmStream, inputService, resetStream } from './event';
+import { inputStream, keydowmStream, inputService, resetStream , suggestionService, suggestionStream } from './event';
 interface Props { }
 interface State {
     activeSuggestion:number,
@@ -34,10 +34,15 @@ class App extends React.Component<any, any>{
     inputStream.subscribe((val:any) => {
       this.setState({
         showSuggestions: true,
-        searchKey: val.value,
-        filteredSuggestions:val.query
+        searchKey: val.value
       });
     });
+    suggestionStream.subscribe((val:any)=>{
+        this.setState({
+          filteredSuggestions:val.query,
+          showSuggestions: true
+        })
+    })
   }
 
 
@@ -99,7 +104,7 @@ class App extends React.Component<any, any>{
                   data-value={suggestion}
                   className={className}
                   key={suggestion}
-                  onClick={(e)=> {inputService.next(e.currentTarget.dataset.value)}}
+                  onClick={(e)=> {inputService(e.currentTarget.dataset.value)}}
                 >
                   {suggestion}
                 </li>

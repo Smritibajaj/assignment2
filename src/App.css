@@ -52,6 +52,7 @@ input {
   position: absolute;
   left: -16px;
   top: 4px;
+  
   height:5px;
   width:5px;
   z-index: 1;

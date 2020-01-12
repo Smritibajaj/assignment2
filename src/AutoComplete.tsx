@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import { keyChange, inputService, resetStream } from './event';
+import { keyChange, inputService, resetStream, suggestionStream, suggestionService } from './event';
 interface State {};
 interface Props{
     suggestionsListComponent?:any,
@@ -13,7 +13,7 @@ render(){
     return(
         <div className="center">
             <div className="box-container">
-            <input type="text" value={this.props.searchValue} placeholder="Enter to search" onChange= {e => inputService.next(e.target.value)} onKeyUp={e=> keyChange.next(e)} />
+            <input type="text" value={this.props.searchValue} placeholder="Enter to search" onChange= {e => {inputService(e.target.value);suggestionService(e.target.value)}} onKeyUp={e=> keyChange.next(e)} />
             <div className="box" onClick={e=> resetStream.next(e)}></div>
             </div>
             {this.props.suggestionsListComponent}
