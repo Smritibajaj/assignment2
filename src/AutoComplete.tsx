@@ -9,7 +9,7 @@ render(){
     return(
         <div className="center">
             <div className="box-container">
-            <input type="text" value={this.props.searchValue} placeholder="Enter to search" onChange= {e => {inputService(e.target.value);suggestionService(e.target.value)}} onKeyUp={e=> keyChange.next(e)} />
+            <input type="text" name="autocomplete" value={this.props.searchValue} placeholder="Enter to search" onChange= {e => {console.log(e.target);inputService(e.target.value);suggestionService(e.target.value)}} onKeyUp={e=> keyChange.next(e)} />
             <div className="box" onClick={e=> resetStream.next(e)}></div>
             </div>
             {this.props.suggestionsListComponent}
