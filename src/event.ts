@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 let inputStream = new Subject();
 let keydowmStream = new Subject();
 let resetStream = new Subject();

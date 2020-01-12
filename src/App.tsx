@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import Autocomplete from './AutoComplete';
-import { inputStream, keydowmStream, inputService, resetStream , suggestionService, suggestionStream } from './event';
-interface Props { }
+import { inputStream, keydowmStream, inputService, resetStream, suggestionStream } from './event';
 interface State {
     activeSuggestion:number,
     filteredSuggestions: any,
@@ -10,10 +9,8 @@ interface State {
     searchKey: string
 }
 
-class App extends React.Component<any, any>{
-  constructor(props:Props){
-    super(props)
-  }
+class App extends React.Component<any, State>{
+ 
   state: State = {
     activeSuggestion: 0,
     filteredSuggestions: [],

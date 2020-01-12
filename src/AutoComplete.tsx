@@ -1,14 +1,10 @@
 import React,{ Component } from 'react';
-import { keyChange, inputService, resetStream, suggestionStream, suggestionService } from './event';
-interface State {};
+import { keyChange, inputService, resetStream, suggestionService } from './event';
 interface Props{
     suggestionsListComponent?:any,
     searchValue?:string
 }; 
-class Autocomplete extends Component<any, any>{
-    constructor(props:Props){
-        super(props);
-    }
+class Autocomplete extends Component<Props, any>{
 render(){
     return(
         <div className="center">
