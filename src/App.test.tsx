@@ -9,7 +9,7 @@ describe('App component', () => {
     console.log(text);
     expect(text).toEqual('');
   })
-  it('increments input by 3 character', () => {
+  it('input feild is working as per user', () => {
     const wrapper = shallow(<App />);
     const incrementBtn = wrapper.find('input');
     incrementBtn.at(0).simulate('change', { target: { name:'name',value: 'Hello' } });
