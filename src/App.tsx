@@ -21,12 +21,9 @@ class App extends React.Component<any, State>{
   componentDidMount(){
     this.initializeInputStream();
     this.initializeFocusStream();
-  }
-
-  componentDidUpdate(){
-    this.initializeInputStream();
     this.initializeResetStream();
   }
+
   initializeInputStream() {
     inputStream.subscribe((val:any) => {
       this.setState({
@@ -53,20 +50,10 @@ class App extends React.Component<any, State>{
     })
   }
 
-
-
   initializeFocusStream() {
     keydowmStream.subscribe((e:any) =>{
-      console.log(e);
-      const { activeSuggestion , filteredSuggestions } = this.state;
-      if (e.keyCode === 13) {
-        this.setState({
-          activeSuggestion: 0,
-          showSuggestions: false,
-          searchKey: filteredSuggestions[activeSuggestion]
-        });
-        // User pressed the enter key, update the input and close the
-    // suggestions
+      // User pressed the enter key
+      const { activeSuggestion, filteredSuggestions } = this.state;
     if (e.keyCode === 13) {
       this.setState({
         activeSuggestion: 0,
@@ -74,10 +61,24 @@ class App extends React.Component<any, State>{
         searchKey: filteredSuggestions[activeSuggestion]
       });
     }
+    // User pressed the up arrow
+    else if (e.keyCode === 38) {
+      if (activeSuggestion === 0) {
+        return;
       }
-      console.log("state is ",this.state);
-    })
-  }
+
+      this.setState({ activeSuggestion: activeSuggestion - 1 });
+    }
+    // User pressed the down arrow
+    else if (e.keyCode === 40) {
+      if (activeSuggestion - 1 === filteredSuggestions.length) {
+        return;
+      }
+
+      this.setState({ activeSuggestion: activeSuggestion + 1 });
+    }
+  })
+}
 
   componentWillUnmount(){
     inputStream.unsubscribe();
@@ -101,6 +102,7 @@ class App extends React.Component<any, State>{
                   data-value={suggestion}
                   className={className}
                   key={suggestion}
+                  onKeyDown={(e)=>{keydowmStream.next(e)}}
                   onClick={(e)=> {inputService(e.currentTarget.dataset.value)}}
                 >
                   {suggestion}
